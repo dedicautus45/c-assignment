@@ -1,0 +1,157 @@
+#include<stdio.h>
+#include<stdbool.h>
+#include<stdlib.h>
+
+typedef struct student{
+char name[100];
+char roll[10];
+struct student *next;
+}std;
+
+std *first=NULL; 
+std *last=NULL;
+
+void create(int n)
+{
+int i;
+first=(std*)malloc(sizeof(std));
+printf("\nEnter the first name of the student:");
+scanf("%s",first->name);
+printf("\nEnter the roll number of the student:");
+scanf("%s",first->roll);
+first->next=NULL;
+last=first;
+for(i=1;i<=100;i++) 
+{
+k=(std*)malloc(sizeof(std));
+printf("\nEnter the first name of the student:");
+scanf("%s",k->name);
+printf("\nEnter the roll number of the student:");
+scanf("%s",k->roll);
+k->next=NULL;
+last->next=k;
+last=k;
+}
+}
+
+void display()
+{
+std *t;
+t=first;
+while(t!=NULL)
+{
+printf("\nThe roll number of the student:%s",t->roll);
+printf("\nFirst name of the student:%s",t->name);
+t=t->next;
+}
+}
+
+void addnode_start()
+{
+char r[10];
+int flag=0;
+printf("\nEnter the roll number u wanna insert after that:");
+scanf("%s",r);
+std *t;
+t=first;
+while(t!=NULL)
+{
+if(strcmpi(r,t->roll)==0)
+{
+k=(std*)malloc(sizeof(std));
+printf("\nEnter the first name of the student:");
+scanf("%s",k->name);
+printf("\nEnter the roll number of the student:");
+scanf("%s",k->roll);
+k->next=t->next;
+t->next=k;
+flag=1;
+break;
+}
+t=t->next;
+}
+if(flag==0)
+printf("\nThe element not found!!!");
+}
+
+void del()
+{
+std *back,*t,*k;
+char r[10];
+int flag=0;
+printf("\nEnter the roll number u wanna delete:");
+scanf("%s",r);
+if(strcmpi(r,first->roll)==0)
+{
+first=first->next;
+flag=1;
+}
+else
+{
+back=first;
+k=first->next;
+while(k!=NULL)
+{
+if(strcmpi(r,k->roll)==0)
+{
+back->next=k->next;
+flag=1;
+break;
+}
+}
+}
+if(flag==0)
+printf("\nThe element not found!!!");
+}
+
+void search()
+{
+char r[10];
+int flag=0;
+printf("\nEnter the roll number u wanna search:");
+scanf("%s",r);
+struct student *t;
+t=first;
+while(t!=NULL)
+{
+if(strcmpi(r,t->roll)==0)
+{
+printf("\nThe roll number found in the list!!!\nHis name is %s",t->name);
+flag=1;
+break;
+}t=t->next;
+}
+if(flag==0)
+printf("\nThe roll number not in database!!");
+}
+
+int main()
+{
+int n,o;
+while(o!=0)
+{
+printf("\nMENU\n");
+printf("\nEnter 1 for creating database");
+printf("\nEnter 2 for displaying database");
+printf("\nEnter 3 for inserting an record after another");
+printf("\nEnter 4 for deleting a record");
+printf("\nEnter 5 for searching a record");
+printf("\nEnter 0 for exit!");
+printf("\nEnter the choice:");
+scanf("%d",&o);
+switch(o)
+{
+case 1:printf("\nEnter the maximum size of the database:");
+scanf("%d",&n);
+create(n);
+break;
+case 2:display();break;
+case 3:insertafter();break;
+case 4:del();break;
+case 5:search();break;
+case 0:exit(0);break;
+default:printf("\nYou have entered a wrong choice!!!");
+}
+}
+getche();
+}
